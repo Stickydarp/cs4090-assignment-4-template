@@ -158,3 +158,20 @@ def sort_tasks_by_due_date(tasks,order="Default"):
     else:
         # Default no change
         return tasks
+    
+def sort_tasks_by_difficulty(tasks, difficulty_order=["Default"]):
+    """
+    Sort tasks by a custom difficulty order.
+    
+    Args:
+        tasks (list): List of task dictionaries
+        difficulty_order (list): List of difficulties in the desired order
+        
+    Returns:
+        list: Sorted list of tasks
+    """
+    if difficulty_order == ["Default"]:
+        return tasks
+    else:
+        difficulty_map = {difficulty: index for index, difficulty in enumerate(difficulty_order)}
+        return sorted(tasks, key=lambda task: difficulty_map.get(task.get("difficulty", ""), float('inf')))

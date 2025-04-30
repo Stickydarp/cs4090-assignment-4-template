@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime
-from tasks import load_tasks, save_tasks, filter_tasks_by_priority, filter_tasks_by_category, sort_tasks_by_due_date,sort_tasks_by_priority
+from tasks import load_tasks, save_tasks, filter_tasks_by_priority, filter_tasks_by_category, sort_tasks_by_due_date,sort_tasks_by_priority,sort_tasks_by_difficulty
 import subprocess
 import sys
 import os
@@ -33,6 +33,7 @@ def main():
         task_description = st.text_area("Description")
         task_priority = st.selectbox("Priority", ["Low", "Medium", "High"])
         task_category = st.selectbox("Category", ["Work", "Personal", "School", "Other"])
+        task_difucultuy = st.selectbox("Difficulty", ["Easy", "Medium", "Hard"])
         task_due_date = st.date_input("Due Date")
         submit_button = st.form_submit_button("Add Task")
         
@@ -43,6 +44,7 @@ def main():
                 "description": task_description,
                 "priority": task_priority,
                 "category": task_category,
+                "difficulty": task_difucultuy,
                 "due_date": task_due_date.strftime("%Y-%m-%d"),
                 "completed": False,
                 "created_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -79,7 +81,7 @@ def main():
         filtered_tasks = sort_tasks_by_due_date(filtered_tasks, "Ascending")
     if date_order == "Descending":  
         filtered_tasks = sort_tasks_by_due_date(filtered_tasks, "Descending")
-    
+    filtered_tasks = sort_tasks_by_difficulty(filtered_tasks,["Easy", "Medium", "Hard"])
     if not show_completed:
         filtered_tasks = [task for task in filtered_tasks if not task["completed"]]
     
@@ -91,7 +93,7 @@ def main():
                 st.markdown(f"~~**{task['title']}**~~")
             else:
                 st.markdown(f"**{task['title']}**")
-            st.write(task["description"])
+            st.write(f"{task["difficulty"]}: {task["description"]}")
             st.caption(f"Due: {task['due_date']} | Priority: {task['priority']} | Category: {task['category']}")
         with col2:
             if st.button("Complete" if not task["completed"] else "Undo", key=f"complete_{task['id']}"):
