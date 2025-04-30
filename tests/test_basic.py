@@ -2,7 +2,7 @@ import pytest
 import sys
 import os
 import json
-#sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from src.tasks import load_tasks, save_tasks, generate_unique_id, filter_tasks_by_priority,filter_tasks_by_category,filter_tasks_by_completion, search_tasks,get_overdue_tasks
 
 ##using pytest parameterize
