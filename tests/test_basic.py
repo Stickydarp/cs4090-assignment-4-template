@@ -7,7 +7,7 @@ from src.tasks import load_tasks, save_tasks, generate_unique_id, filter_tasks_b
 
 ##using pytest parameterize
 @pytest.mark.parametrize("file_path, expected_type, expected_non_empty", [
-    ("test.json", list, True)
+    ("src/test.json", list, True)
 ])
 def test_load_tasks(file_path, expected_type, expected_non_empty):
     tasks = load_tasks(file_path)
