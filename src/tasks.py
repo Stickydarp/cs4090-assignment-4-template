@@ -123,3 +123,38 @@ def get_overdue_tasks(tasks):
         if not task.get("completed", False) and 
            task.get("due_date", "") < today
     ]
+
+def sort_tasks_by_priority(tasks, priority_order=["Default"]):
+    """
+    Sort tasks by a custom priority order.
+    
+    Args:
+        tasks (list): List of task dictionaries
+        priority_order (list): List of priorities in the desired order
+        
+    Returns:
+        list: Sorted list of tasks
+    """
+    if priority_order == ["Default"]:
+        return tasks
+    else:
+        priority_map = {priority: index for index, priority in enumerate(priority_order)}
+        return sorted(tasks, key=lambda task: priority_map.get(task.get("priority", ""), float('inf')))
+
+def sort_tasks_by_due_date(tasks,order="Default"):
+    """
+    Sort tasks by their due date.
+    
+    Args:
+        tasks (list): List of task dictionaries
+        
+    Returns:
+        list: Sorted list of tasks by due date
+    """
+    if order == "Descending":
+        return sorted(tasks, key=lambda task: task.get("due_date","9999-12-31"), reverse=True)
+    elif order == "Ascending":
+        return sorted(tasks, key=lambda task: task.get("due_date","9999-12-31"))
+    else:
+        # Default no change
+        return tasks

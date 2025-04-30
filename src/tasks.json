@@ -1,32 +1,12 @@
 [
   {
-    "id": 21,
-    "title": "homework",
-    "description": "boring stuff",
-    "priority": "High",
-    "category": "School",
-    "due_date": "2025-09-29",
-    "completed": false,
-    "created_at": "2025-04-29 18:37:14"
-  },
-  {
-    "id": 20,
-    "title": "watch friends",
-    "description": "obv",
-    "priority": "Low",
-    "category": "Other",
-    "due_date": "2034-09-29",
-    "completed": false,
-    "created_at": "2025-04-29 18:38:56"
-  },
-  {
-    "id": 3,
-    "title": "watch friends",
-    "description": "obv",
-    "priority": "Low",
+    "id": 1,
+    "title": "20188acacascgiuasc",
+    "description": "obvadsdadaacscascascassacsac",
+    "priority": "Medium",
     "category": "Other",
     "due_date": "2016-09-08",
     "completed": false,
-    "created_at": "2025-04-29 18:40:50" 
+    "created_at": "2025-04-30 13:37:14"
   }
 ]

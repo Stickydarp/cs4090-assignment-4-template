@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime
-from tasks import load_tasks, save_tasks, filter_tasks_by_priority, filter_tasks_by_category
+from tasks import load_tasks, save_tasks, filter_tasks_by_priority, filter_tasks_by_category, sort_tasks_by_due_date,sort_tasks_by_priority
 import subprocess
 import sys
 import os
@@ -55,11 +55,15 @@ def main():
     st.header("Your Tasks")
     
     # Filter options
-    col1, col2 = st.columns(2)
+    col1, col2 ,col3,col4= st.columns(4)
     with col1:
         filter_category = st.selectbox("Filter by Category", ["All"] + list(set([task["category"] for task in tasks])))
     with col2:
         filter_priority = st.selectbox("Filter by Priority", ["All", "High", "Medium", "Low"])
+    with col3:
+        priority_order = st.selectbox("Sort by Priority", ["Default", ["High","Medium","Low"], ["Low","Medium","High"]])
+    with col4:
+        date_order = st.selectbox("Sort by Due Date", ["Default", "Ascending", "Descending"])
     
     show_completed = st.checkbox("Show Completed Tasks")
     
@@ -69,6 +73,13 @@ def main():
         filtered_tasks = filter_tasks_by_category(filtered_tasks, filter_category)
     if filter_priority != "All":
         filtered_tasks = filter_tasks_by_priority(filtered_tasks, filter_priority)
+    if priority_order != "Default":
+        filtered_tasks= sort_tasks_by_priority(filtered_tasks,priority_order)
+    if date_order == "Ascending":
+        filtered_tasks = sort_tasks_by_due_date(filtered_tasks, "Ascending")
+    if date_order == "Descending":  
+        filtered_tasks = sort_tasks_by_due_date(filtered_tasks, "Descending")
+    
     if not show_completed:
         filtered_tasks = [task for task in filtered_tasks if not task["completed"]]
     
