@@ -2,10 +2,25 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 from tasks import load_tasks, save_tasks, filter_tasks_by_priority, filter_tasks_by_category
+import subprocess
+import sys
+import os
+
+
+
 
 def main():
     st.title("To-Do Application")
-    
+    # Add a button to run unit tests
+    if st.button("Run Unit Tests"):
+        with st.spinner("Running tests..."):
+            result = subprocess.run(["pytest", "--cov=src", "--cov-report=term-missing"], capture_output=True, text=True)
+            st.text(result.stdout)  # Display the test results in the app
+            if result.returncode == 0:
+                st.success("All tests passed!")
+            else:
+                st.error("Some tests failed. Check the output above.")
+
     # Load existing tasks
     tasks = load_tasks()
     
@@ -79,5 +94,5 @@ def main():
                 save_tasks(tasks)
                 st.rerun()
 
-if __name__ == "__main__":
+if __name__ == "__main__": 
     main()
